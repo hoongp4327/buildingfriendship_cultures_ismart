@@ -73,11 +73,10 @@ p{margin:0}
 .kvlist li::before{content:counter(k);position:absolute;top:12px;left:12px;width:28px;height:28px;border-radius:50%;background:var(--orange);color:#fff;font:800 13px/28px var(--f-display);text-align:center;z-index:1;box-shadow:0 0 0 3px rgba(255,255,255,.9)}
 .kvlist li.on{border-color:var(--culture);box-shadow:0 14px 30px -20px rgba(31,79,193,.6)}
 .kvlist li > img,.kvlist .type-demo,.kvlist .swatches{display:block;width:100%;height:100%;min-height:240px;max-height:300px;object-fit:cover;background:#F3F8FE;border-right:1px solid var(--rule)}
-.kvlist li[data-k="5"] > img{object-fit:contain;padding:18px 24px}
+.kvlist li[data-k="3"] > img,.kvlist li[data-k="4"] > img,.kvlist li[data-k="5"] > img{object-fit:contain;padding:10px}
 .kvlist li[data-k="6"] > img{object-position:center}
 .kvlist li > div:last-child{padding:24px 28px;display:grid;gap:10px;align-content:center}
 .kvlist li[data-k="2"] > img{object-fit:contain;padding:10px}
-.kvlist li[data-k="4"] > img{object-position:center 40%}
 .kvlist li > img{position:absolute;inset:0 auto 0 0;width:min(380px,100%);height:100%;max-height:none}
 .kvlist li > img + div{grid-column:2}
 .kvlist h3{font-size:20px;font-weight:800}
