@@ -151,6 +151,20 @@ p{margin:0}
 .topic span{font-size:14px;color:var(--ink-soft)}
 .topics-label{margin-top:30px;font-family:var(--f-display);font-weight:800;font-size:13px;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
 
+/* photos, flags, timeline heading */
+.tl{padding-block:84px 8px;margin-top:40px;border-top:1px solid var(--rule)}
+.photos{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:30px}
+.ph{margin:0}
+.ph img{display:block;width:100%;height:auto;aspect-ratio:1376/768;object-fit:cover;border-radius:12px;box-shadow:0 6px 18px rgba(16,39,92,.12)}
+.ph figcaption{margin-top:7px;font-family:var(--f-display);font-weight:700;font-size:13px;color:var(--ink-soft)}
+.mini .ph{max-width:420px;margin-top:18px}
+.flag{display:inline-block;width:24px;height:16px;border-radius:2px;box-shadow:0 0 0 1px rgba(16,39,92,.18);vertical-align:-2px;flex-shrink:0}
+.topics-label .flag{width:30px;height:20px;vertical-align:-4px;margin-right:6px}
+.topic .pair{display:flex;flex-direction:column;gap:5px;margin-top:6px}
+.topic .pair span{display:flex;gap:8px;align-items:center}
+.part .ph figcaption{color:#fff;opacity:.9}
+.quote [lang="vi"]{font-family:"Dancing Script","Kaushan Script",cursive;font-weight:700}
+@media (max-width:760px){.photos{grid-template-columns:1fr 1fr}.photos .ph:nth-child(3){display:none}}
 /* event preview slideshow (right to left) */
 .gallery{padding-block:8px 8px}
 .gallery .eyebrow{margin-bottom:16px}
