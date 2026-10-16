@@ -314,3 +314,21 @@ footer b{color:#fff;font-family:var(--f-display)}
 /* closing centred */
 .closing > .eyebrow{text-align:center}
 .closing .gift{margin:22px auto 0;max-width:58ch;text-align:center;text-wrap:balance;line-height:1.65}
+
+/* arrow + emblems + closing 2 lines */
+.link{color:var(--culture)}
+.link .arr{width:46px;height:24px;animation:nudge 2.2s ease-in-out infinite}
+@keyframes nudge{0%,100%{transform:translateX(-4px);opacity:.75}50%{transform:translateX(5px);opacity:1}}
+.part .head{grid-template-columns:auto 1fr auto;align-items:center}
+.part .emblem{width:132px;height:132px;border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:0 0 0 6px rgba(255,255,255,.25),0 18px 30px -16px rgba(0,0,0,.45);animation:floaty 5s ease-in-out infinite}
+.part.p2 .emblem{animation-delay:-2.5s}
+.part .emblem img{width:84%;height:auto}
+.closing .gift{max-width:none;font-size:16.5px;width:min(1300px,calc(100vw - 40px));position:relative;left:50%;transform:translateX(-50%)}
+@media (max-width:900px){.closing .gift{width:auto;left:auto;transform:none}}
+@media (max-width:900px){
+  .link .arr{transform:rotate(90deg);animation-name:nudgev}
+  @keyframes nudgev{0%,100%{transform:rotate(90deg) translateX(-4px);opacity:.75}50%{transform:rotate(90deg) translateX(5px);opacity:1}}
+  .part .head{grid-template-columns:1fr}
+  .part .emblem{width:96px;height:96px}
+}
+@media (prefers-reduced-motion:reduce){.link .arr,.part .emblem{animation:none}}
