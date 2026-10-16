@@ -332,3 +332,4 @@ footer b{color:#fff;font-family:var(--f-display)}
   .part .emblem{width:96px;height:96px}
 }
 @media (prefers-reduced-motion:reduce){.link .arr,.part .emblem{animation:none}}
+.photos.two{grid-template-columns:repeat(2,1fr)}
