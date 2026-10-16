@@ -55,7 +55,7 @@ p{margin:0}
 .intro{padding-block:56px 20px}
 .intro-grid{margin-top:30px;display:grid;grid-template-columns:1.35fr 1fr;gap:40px;align-items:start}
 .intro-text{display:grid;gap:16px;min-width:0}
-.lede-big{font-family:var(--f-display);font-weight:600;font-size:clamp(19px,2vw,23px);line-height:1.45;color:var(--ink);border-left:4px solid var(--orange);padding-left:18px}
+.lede-big{font-family:var(--f-display);font-weight:600;font-size:clamp(17px,1.6vw,19px);line-height:1.6;color:var(--ink);border-left:4px solid var(--orange);padding-left:18px}
 .info{margin:0;background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:6px 22px;box-shadow:0 10px 30px -22px rgba(16,39,92,.5);min-width:0}
 .info div{display:grid;grid-template-columns:120px 1fr;gap:12px;padding:14px 0;border-top:1px solid var(--rule)}
 .info div:first-child{border-top:0}
@@ -151,6 +151,9 @@ p{margin:0}
 .topic span{font-size:14px;color:var(--ink-soft)}
 .topics-label{margin-top:30px;font-family:var(--f-display);font-weight:800;font-size:13px;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
 
+.partners dd b{display:block;font-family:var(--f-display);font-weight:800}
+.partners dd small{display:block;font-size:13px;color:var(--ink-soft);margin-bottom:8px}
+.partners dd small:last-child{margin-bottom:0}
 /* photos, flags, timeline heading */
 .tl{padding-block:84px 8px;margin-top:40px;border-top:1px solid var(--rule)}
 .photos{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:30px}
