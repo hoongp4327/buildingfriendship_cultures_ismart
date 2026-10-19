@@ -114,6 +114,7 @@ header img.lock{height:21vh;width:auto;max-width:36vw;box-sizing:content-box;pad
 .who{position:absolute;right:calc(100% + 4vw);top:50%;translate:0 -50%;white-space:nowrap;display:grid;justify-items:end;gap:.4vh;text-align:right;font-family:var(--f-display);font-weight:900;color:#fff;box-shadow:0 6px 18px rgba(232,80,27,.45);opacity:0;transform:translateY(1vh);transition:opacity .4s,transform .4s}
 .who small{font-weight:800;font-size:max(12px,2vh);letter-spacing:.2em;color:#FFD9C7}
 .who b{font-size:max(20px,9vh);line-height:.95}
+.who .lnk{margin-top:2vh;font-family:var(--f-body);font-weight:700;font-size:max(12px,1.9vh);color:#fff;background:rgba(255,255,255,.14);padding:.5em .9em;border-radius:.6em;white-space:nowrap}
 .who em{font-family:var(--f-script);font-style:normal;font-weight:400;font-size:max(18px,5.5vh);color:#FFB08F}
 .stage.lit .who{opacity:1;transform:none}
 .closehint{position:absolute;left:calc(100% + 4vw);bottom:0;display:flex;gap:1vh;opacity:0;transition:opacity .4s}
@@ -152,7 +153,8 @@ header img.lock{height:21vh;width:auto;max-width:36vw;box-sizing:content-box;pad
   .res{grid-template-columns:1fr}
   .big{height:min(74vh,128vw)}
   .who{right:auto;left:50%;top:0;translate:-50% -110%;justify-items:center;text-align:center;grid-auto-flow:column;align-items:baseline;gap:2vw}
-  .who b{font-size:7vw}.who em{font-size:6vw}.who small{display:none}
+  .who b{font-size:7vw}.who .lnk{margin-top:2vh;font-family:var(--f-body);font-weight:700;font-size:max(12px,1.9vh);color:#fff;background:rgba(255,255,255,.14);padding:.5em .9em;border-radius:.6em;white-space:nowrap}
+.who em{font-size:6vw}.who small{display:none}
   .closehint{left:50%;bottom:auto;top:100%;translate:-50% 2vh}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
@@ -170,6 +172,7 @@ header img.lock{height:21vh;width:auto;max-width:36vw;box-sizing:content-box;pad
       <p>Mỗi nhóm lên bấm bốc 1 thẻ. Chủ đề đã bốc sẽ không ra lại.</p>
     </div>
     <div class="tools">
+      <span class="tool" id="sync" hidden></span>
       <button class="tool" id="bSound" aria-pressed="true" title="Bật/tắt âm thanh (M)">Âm thanh</button>
       <button class="tool" id="bRes" title="Xem bảng kết quả">Kết quả</button>
       <button class="tool" id="bUndo" title="Hoàn tác lượt vừa bốc">Hoàn tác</button>
@@ -233,6 +236,11 @@ const TOPICS=[
  {en:"Traditional Costumes",vi:"Trang phục truyền thống",vn:"Áo dài",vnS:"Mặc dịp lễ, Tết, đến trường",vnA:"aodai",sg:"Baju kurung · Cheongsam · Sari",sgS:"Mỗi cộng đồng một bộ",sgA:"kurung",q:["When do people wear it today?","Which colours and patterns are common?","Which costume would you like to try?"]}
 ];
 const N=6;
+const SLUG=['food','festivals','games','folk-art','family','costumes'];
+const ONSITE=location.protocol.startsWith('http')&&!/claude/.test(location.hostname);
+const SYNC='/api/topicdraw',SKEY='ismart-3010';
+function push(){if(!ONSITE)return;fetch(SYNC,{method:'POST',headers:{'content-type':'application/json','x-draw-key':SKEY},body:JSON.stringify({order:st.order,owner:st.owner})}).then(r=>showSync(r.ok)).catch(()=>showSync(false))}
+function showSync(ok){const e=document.getElementById('sync');e.hidden=false;e.textContent=ok?'● Laptop nhóm: đã gửi':'● Laptop nhóm: chưa kết nối';e.style.color=ok?'#2E6B34':'#B53A0F'}
 const backHTML=()=>`<div class="face back"><div class="frame"></div><div class="mid"><small>TOPIC CARD</small><div class="q">?</div><div class="scr">Sharing Cultures</div><div class="vs">VIETNAM × SINGAPORE</div></div></div>`;
 const frontHTML=(ti)=>{const t=TOPICS[ti];return `<div class="face front"><div class="hd"><small>TOPIC ${ti+1} · CHỦ ĐỀ ${ti+1}</small><b>${t.en.replace('&','&amp;')}</b><i>${t.vi}</i></div>
 <div class="pair"><div class="side"><div class="art">${ART[t.vnA]}</div><div class="cty">${FLAG.vn}VIETNAM</div><b>${t.vn}</b><span>${t.vnS}</span></div><div class="x">×</div>
@@ -338,13 +346,13 @@ async function draw(pick){
   let target=pick;
   if(target===undefined){const r=new Uint32Array(1);crypto.getRandomValues(r);target=rem[r[0]%rem.length];await shuffleAnim();await roulette(target)}
   else{const el=board.querySelector(`.slot[data-i="${target}"]`);el.classList.add('hot');tick();await wait(450)}
-  st.owner[target]=g;st.hist.push(target);save();
+  st.owner[target]=g;st.hist.push(target);save();push();
   await reveal(target,true);
 }
 async function reveal(i,isNew){
   openSlot=i;const slot=board.querySelector(`.slot[data-i="${i}"]`),stage=$('#stage'),flip=$('#flip'),big=$('#big');
   flip.innerHTML=(isNew?backHTML():'')+frontHTML(st.order[i]).replace('class="face front"','class="face front"');
-  $('#who').innerHTML=`<small>${isNew?'VỪA BỐC ĐƯỢC':'CHỦ ĐỀ CỦA'}</small><b>Group ${st.owner[i]+1}</b><em>Nhóm ${st.owner[i]+1}</em>`;
+  $('#who').innerHTML=`<small>${isNew?'VỪA BỐC ĐƯỢC':'CHỦ ĐỀ CỦA'}</small><b>Group ${st.owner[i]+1}</b><em>Nhóm ${st.owner[i]+1}</em>${ONSITE?`<span class="lnk">${location.host}/topicdraw/${SLUG[st.order[i]]}</span>`:''}`;
   stage.classList.add('on');
   const r=slot.getBoundingClientRect(),b=big.getBoundingClientRect();
   const dx=r.left+r.width/2-(b.left+b.width/2),dy=r.top+r.height/2-(b.top+b.height/2),sc=r.width/b.width;
@@ -382,7 +390,7 @@ function showResults(){
 }
 function confirmReset(){
   sheet.innerHTML=`<div class="panel" role="dialog" aria-label="Bốc lại từ đầu" style="width:min(560px,100%)"><h2>Bốc lại từ đầu?</h2><p>Toàn bộ kết quả hiện tại sẽ bị xóa và 6 thẻ được xáo lại.</p><div class="row"><button id="sn">Giữ kết quả</button><button class="warn" id="sy">Xóa và bốc lại</button></div></div>`;
-  sheet.hidden=false;$('#sn').onclick=()=>sheet.hidden=true;$('#sy').onclick=()=>{const snd=st.sound;st=fresh();st.sound=snd;save();sheet.hidden=true;render()};$('#sn').focus();
+  sheet.hidden=false;$('#sn').onclick=()=>sheet.hidden=true;$('#sy').onclick=()=>{const snd=st.sound;st=fresh();st.sound=snd;save();push();sheet.hidden=true;render()};$('#sn').focus();
 }
 
 /* ---------- events ---------- */
@@ -395,7 +403,7 @@ $('#stage').addEventListener('click',e=>{if(e.target.classList.contains('dim')&&
 $('#bSound').onclick=()=>{st.sound=!st.sound;save();render()};
 $('#bRes').onclick=showResults;
 $('#bReset').onclick=()=>{if(!busy)confirmReset()};
-$('#bUndo').onclick=()=>{if(busy||!st.hist.length)return;const i=st.hist.pop();st.sel=st.owner[i];st.owner[i]=null;save();render()};
+$('#bUndo').onclick=()=>{if(busy||!st.hist.length)return;const i=st.hist.pop();st.sel=st.owner[i];st.owner[i]=null;save();push();render()};
 $('#bFull').onclick=()=>{try{document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen().catch(()=>{})}catch(e){}};
 addEventListener('keydown',e=>{
   if(!sheet.hidden){if(e.key==='Escape')sheet.hidden=true;return}
