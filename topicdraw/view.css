@@ -56,6 +56,8 @@ body{margin:0;background:var(--bgc) url(assets/bg.webp) center/cover no-repeat f
 .front .art{width:25cqw;aspect-ratio:1;display:grid;place-items:center;background:#fff;border-radius:50%;box-shadow:0 0 0 .5cqw var(--line)}
 .front .art svg,.front .art img{width:80%;height:80%;object-fit:contain}
 .front .art img{mix-blend-mode:multiply}
+.front .art:has(.photo){overflow:hidden}
+.front .art img.photo{width:100%;height:100%;object-fit:cover;transform:scale(1.04);mix-blend-mode:normal}
 .front .cty{display:flex;align-items:center;gap:1.4cqw;font-weight:800;font-size:3.2cqw;letter-spacing:.12em;color:var(--muted)}
 .front .cty svg{width:6cqw;height:4cqw;border-radius:.5cqw;box-shadow:0 0 0 .3cqw var(--line)}
 .front .side b{font-weight:900;font-size:4.5cqw;line-height:1.1;color:var(--navy)}
